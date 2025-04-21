@@ -1,4 +1,3 @@
-// script.js
 
 let count = 0;
 const defaultGoal = 2000;
@@ -8,6 +7,7 @@ window.addEventListener('load', () => {
   const storedGoal = localStorage.getItem('dailyGoal');
   goal = storedGoal ? Number(storedGoal) : defaultGoal;
   localStorage.setItem('dailyGoal', goal);
+
   document.getElementById('goalInput').value = goal;
   document.getElementById('goalDisplay').innerText = goal;
 
@@ -57,8 +57,6 @@ function showToast(message) {
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 3000);
 }
-
-// ——— Bildirim Sistemi ———
 
 if ("Notification" in window && navigator.serviceWorker) {
   navigator.serviceWorker
