@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AteşveSu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- Ayarlar Bölümü -->
+    <div class="settings">
+      <label for="goalInput">Günlük Hedef (ml):</label>
+      <input type="number" id="goalInput" placeholder="Hedefi Girin" />
+      <button id="saveGoalBtn" onclick="saveGoal()">Kaydet</button>
+      <p>Hedefiniz: <span id="goalDisplay"></span> ml</p>
+    </div>
+
+    <h1>💧 AteşveSu – Su Takibi</h1>
+
+    <div id="progress-bar-container">
+      <div id="progress-bar"></div>
+    </div>
+    <p id="progress-text">0 / 0 ml</p>
+
+    <div class="actions">
+      <button onclick="addWater(250)">+250 ml</button>
+      <button onclick="addWater(500)">+500 ml</button>
+      <button onclick="resetCounter()">🔄 Sıfırla</button>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
