@@ -1,3 +1,5 @@
+// script.js
+
 let count = 0;
 const defaultGoal = 2000;
 let goal = defaultGoal;
@@ -6,7 +8,6 @@ window.addEventListener('load', () => {
   const storedGoal = localStorage.getItem('dailyGoal');
   goal = storedGoal ? Number(storedGoal) : defaultGoal;
   localStorage.setItem('dailyGoal', goal);
-
   document.getElementById('goalInput').value = goal;
   document.getElementById('goalDisplay').innerText = goal;
 
@@ -55,4 +56,29 @@ function showToast(message) {
   toast.innerText = message;
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 3000);
+}
+
+// ——— Bildirim Sistemi ———
+
+if ("Notification" in window && navigator.serviceWorker) {
+  navigator.serviceWorker
+    .register("service-worker.js")
+    .then(() => console.log("Service Worker kayıt edildi."))
+    .catch(err => console.log("SW kaydında hata:", err));
+
+  Notification.requestPermission().then(permission => {
+    console.log("Bildirim izni:", permission);
+  });
+
+  function sendNotification() {
+    if (Notification.permission === "granted") {
+      new Notification("Su içmeyi unutma! 💧", {
+        body: "Günde 2 litre su içmeyi hedefle!",
+        icon: "su_ikonu.png",
+        tag: "su-notifikasyon",
+      });
+    }
+  }
+
+  setInterval(sendNotification, 3600000);
 }

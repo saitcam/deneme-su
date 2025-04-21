@@ -1,13 +1,17 @@
 // service-worker.js
 
-self.addEventListener("install", (event) => {
-  console.log("✅ Service Worker yüklendi.");
+self.addEventListener("install", event => {
+  console.log("Service Worker yüklendi");
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  console.log("🔄 Service Worker aktif.");
+self.addEventListener("activate", event => {
+  console.log("Service Worker aktif oldu");
 });
 
-self.addEventListener("fetch", (event) => {
-  // Cache işlemleri gerekiyorsa buraya eklenebilir
+self.addEventListener("notificationclick", event => {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow("https://imaginative-meerkat-24d0f9.netlify.app/")
+  );
 });
