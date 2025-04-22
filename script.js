@@ -106,3 +106,86 @@ function sendWaterReminder() {
 }
 
 setInterval(sendWaterReminder, 30 * 60 * 1000);
+// 📅 Haftalık veri hazırlığı
+function getTodayKey() {
+  const today = new Date();
+  return `water-${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+}
+
+// Günü güncelle
+function updateDailyTotal(amount) {
+  const key = getTodayKey();
+  const existing = parseInt(localStorage.getItem(key)) || 0;
+  localStorage.setItem(key, existing + amount);
+}
+
+// addWater fonksiyonuna şunu ekle:
+function addWater(amount) {
+  total += amount;
+  updateDisplay();
+  updateDailyTotal(amount); // ← Günlük veriyi güncelle
+  updateChart(); // ← Grafiği yenile
+}
+
+// 📊 Grafik verisini hazırla
+function getLast7DaysData() {
+  const labels = [];
+  const data = [];
+  const now = new Date();
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(now);
+    date.setDate(now.getDate() - i);
+    const key = `water-${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    const dayLabel = date.toLocaleDateString('tr-TR', { weekday: 'short' });
+    labels.push(dayLabel);
+    data.push(parseInt(localStorage.getItem(key)) || 0);
+  }
+
+  return { labels, data };
+}
+
+// 📊 Grafik Oluştur
+let chart;
+function renderChart() {
+  const ctx = document.getElementById("weeklyChart").getContext("2d");
+  const { labels, data } = getLast7DaysData();
+
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Günlük Su (ml)",
+        data: data,
+        backgroundColor: "#4caf50",
+        borderRadius: 6,
+      }],
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true },
+      },
+      plugins: {
+        legend: { display: false },
+      },
+    },
+  });
+}
+
+function updateChart() {
+  const { labels, data } = getLast7DaysData();
+  chart.data.labels = labels;
+  chart.data.datasets[0].data = data;
+  chart.update();
+}
+
+// Sayfa yüklendiğinde grafik oluştur
+window.onload = () => {
+  // ...önceki kodlar...
+  if (savedTotal) {
+    total = parseInt(savedTotal);
+    updateDisplay();
+  }
+  renderChart(); // ← Grafik oluştur
+};
