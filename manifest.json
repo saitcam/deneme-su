@@ -1,0 +1,16 @@
+{
+  "name": "Ateş ve Su",
+  "short_name": "AteşveSu",
+  "description": "Su içmeyi hatırlatıcı uygulama",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6347",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

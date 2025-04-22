@@ -212,3 +212,19 @@ window.onload = () => {
     Notification.requestPermission();
   }
 };
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(function(registration) {
+      console.log('Service Worker başarıyla kaydedildi:', registration);
+    })
+    .catch(function(error) {
+      console.log('Service Worker kaydedilemedi:', error);
+    });
+}
+if ('Notification' in window && Notification.permission !== 'granted') {
+  Notification.requestPermission().then(function(permission) {
+    if (permission === 'granted') {
+      console.log('Bildirim izni verildi!');
+    }
+  });
+}

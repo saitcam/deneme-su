@@ -1,4 +1,11 @@
+self.addEventListener('push', function(event) {
+  var options = {
+    body: event.data.text(),
+    icon: 'icon.png',
+    badge: 'icon.png'
+  };
 
-self.addEventListener('install', event => {
-  console.log('Service Worker yüklendi');
+  event.waitUntil(
+    self.registration.showNotification('💧 Su Zamanı!', options)
+  );
 });
