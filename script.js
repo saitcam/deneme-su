@@ -80,3 +80,23 @@ if ("Notification" in window && navigator.serviceWorker) {
 
   setInterval(sendNotification, 3600000);
 }
+// 🌙 Karanlık Mod - Tema Geçişi
+const toggleButton = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Sayfa yüklendiğinde tema kontrolü
+window.onload = () => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    toggleButton.textContent = '🌞';
+  }
+};
+
+// Tıklama ile geçiş
+toggleButton.addEventListener('click', () => {
+  body.classList.toggle('dark-mode');
+  const isDark = body.classList.contains('dark-mode');
+  toggleButton.textContent = isDark ? '🌞' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});

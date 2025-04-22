@@ -9,6 +9,7 @@
   <link rel="icon" href="su_ikonu.png" type="image/png">
 </head>
 <body>
+<button id="theme-toggle">🌙</button>
   <div class="container">
     <div class="settings">
       <label for="goalInput">Günlük Hedef (ml):</label>
@@ -17,7 +18,7 @@
       <p>Hedefiniz: <span id="goalDisplay"></span> ml</p>
     </div>
 
-    <h1>AteşveSu 💧 – Günde en az 2 litre su iç!</h1>
+    <h1>AteşveSu 💧 – Günde en az 3 litre su iç!</h1>
 
     <div id="progress-bar-container">
       <div id="progress-bar"></div>
@@ -27,6 +28,7 @@
     <div class="actions">
       <button onclick="addWater(250)">+250 ml</button>
       <button onclick="addWater(500)">+500 ml</button>
+      <button onclick="addWater(650)">+650 ml</button>
       <button onclick="resetCounter()">🔄 Sıfırla</button>
     </div>
   </div>
