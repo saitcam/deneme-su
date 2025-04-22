@@ -189,3 +189,26 @@ window.onload = () => {
   }
   renderChart(); // ← Grafik oluştur
 };
+function sendWaterReminder() {
+  if (Notification.permission === "granted") {
+    new Notification("💧 Su Zamanı!", {
+      body: "Her saat başı bir bardak su içmeyi unutma! 🥤",
+      icon: "icon.png"
+    });
+  }
+}
+
+// Her dakikada bir kontrol: saat başıysa bildir
+setInterval(() => {
+  const now = new Date();
+  if (now.getMinutes() === 0 && now.getSeconds() < 5) {
+    sendWaterReminder();
+  }
+}, 60 * 1000);
+
+// Sayfa açıldığında izin iste
+window.onload = () => {
+  if ("Notification" in window && Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
+};
