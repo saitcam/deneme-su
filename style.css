@@ -1,130 +1,256 @@
-:root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-}
-
-body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #ffffff;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: all 0.3s ease;
-  padding: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  background-color: #4caf50;
-  color: white;
-  transition: background-color 0.2s;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-#theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: #333;
-  color: white;
-}
+/* Google Fonts - Inter fontunu ekler */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
+/* CSS Değişkenleri */
 :root {
-  --bg-color: #f4f4f4;
-  --text-color: #333;
-  --card-bg: #fff;
-  --accent-color: #4caf50;
-  --button-hover: #43a047;
+  --bg-color: #f4f4f4; /* Açık tema arka plan rengi */
+  --text-color: #333; /* Açık tema metin rengi */
+  --card-bg: #fff; /* Açık tema kart arka plan rengi */
+  --accent-color: #4caf50; /* Ana vurgu rengi (yeşil) */
+  --button-hover: #43a047; /* Buton hover rengi */
+  --progress-bar-color-initial: #2196F3; /* İlerleme çubuğu başlangıç rengi (mavi) */
+  --progress-bar-color-complete: #4CAF50; /* İlerleme çubuğu tamamlanma rengi (yeşil) - JavaScript'te de kullanılıyor */
+  --input-border-color: #ccc; /* Giriş alanı kenarlık rengi */
 }
 
+/* Koyu Mod Stilleri */
 body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #f5f5f5;
-  --card-bg: #1e1e1e;
-  --accent-color: #81c784;
-  --button-hover: #66bb6a;
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --accent-color: #81c784;
+  --button-hover: #66bb6a;
+  --progress-bar-color-initial: #64b5f6;
+  --input-border-color: #555;
 }
 
+/* Genel Body Stili */
 body {
-  margin: 0;
-  padding: 20px;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Tema geçişi için */
 }
 
+/* Başlık Alanı */
 header {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
 }
 
+/* Ana İçerik Kartı */
 main {
-  width: 100%;
-  max-width: 600px;
-  background-color: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: left; /* İçeriği sola hizala */
+  margin-bottom: 30px; /* Altına boşluk ekle */
 }
 
+/* Paragraf Stili */
 p {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 18px; /* Font boyutunu biraz küçülttüm */
+  margin-bottom: 15px; /* Alt boşluğu ayarladım */
+  line-height: 1.5; /* Satır yüksekliği */
 }
 
+/* Butonların Genel Stili */
 button {
-  background-color: var(--accent-color);
-  border: none;
-  color: white;
-  padding: 12px 24px;
-  margin: 10px 8px;
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  background-color: var(--accent-color);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  margin: 5px; /* Butonlar arası boşluk */
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-block; /* Butonları yan yana dizmek için */
 }
 
 button:hover {
-  background-color: var(--button-hover);
-  transform: scale(1.05);
+  background-color: var(--button-hover);
+  transform: scale(1.03); /* Hover efekti biraz küçültüldü */
 }
 
+/* Tema Değiştirme Butonu */
 #theme-toggle {
-  background-color: transparent;
-  font-size: 24px;
-  border: none;
-  cursor: pointer;
-  color: var(--text-color);
+  background-color: transparent;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+  margin: 0; /* Konumlandığı için margin 0 */
+  padding: 5px;
 }
 
-@media (max-width: 600px) {
-  main {
-    padding: 20px;
-  }
+/* Günlük Hedef Ayarları Alanı */
+.goal-settings {
+  margin-bottom: 25px; /* Ana içerikteki diğer kısımlardan ayırmak için */
+  padding-bottom: 20px; /* İç alt boşluk */
+  border-bottom: 1px solid var(--input-border-color); /* Altına çizgi */
+}
 
-  button {
-    width: 100%;
-    margin: 10px 0;
-  }
+.goal-settings label {
+  display: block; /* Etiketi ayrı satıra al */
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600; /* Kalın font */
+}
+
+.goal-settings input[type="number"] {
+  padding: 10px;
+  margin-right: 10px; /* Butonla arasına boşluk */
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  transition: border-color 0.3s;
+}
+
+.goal-settings input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Fokuslandığında renk değiştir */
+}
+
+.goal-settings button {
+  /* Hedef butonları için özel stil gerekirse buraya yazılır */
+  /* Şimdilik genel buton stiline uyuyorlar */
+}
+
+/* Su Ekleme Butonları Alanı */
+.add-water-buttons {
+  margin-top: 20px;
+  display: flex; /* Butonları yan yana düzenlemek için */
+  flex-wrap: wrap; /* Ekran daralınca alt satıra geçsinler */
+  justify-content: center; /* Butonları ortala */
+  gap: 10px; /* Butonlar arasına boşluk */
+}
+
+.add-water-buttons button {
+  flex-grow: 1; /* Butonların eşit genişlikte büyümesini sağlar */
+  max-width: 150px; /* Maksimum genişlik belirle */
+  text-align: center;
+}
+
+
+/* İlerleme Çubuğu Alanı */
+.progress-container {
+  width: 100%;
+  background-color: #e0e0e0; /* Açık tema için arkaplan */
+  body.dark-mode & {
+    background-color: #333; /* Koyu tema için arkaplan */
+  }
+  border-radius: 20px;
+  overflow: hidden;
+  height: 25px; /* Çubuk yüksekliği artırıldı */
+  margin-top: 20px;
+  margin-bottom: 10px; /* Metinle arasına boşluk */
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%; /* Başlangıçta genişlik 0 */
+  background-color: var(--progress-bar-color-initial); /* JavaScript'te güncelleniyor */
+  transition: width 0.4s ease; /* Genişlik değişimi animasyonu */
+  border-radius: 20px 0 0 20px; /* Sadece sol tarafı yuvarlak */
+}
+
+#progressText {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5px;
+  font-size: 16px;
+  color: var(--text-color); /* Tema rengini kullansın */
+}
+
+/* Grafik Alanı */
+#weeklyChart {
+  margin-top: 30px;
+  width: 100% !important; /* Grafik genişliğini ayarla */
+  max-width: 600px;
+  background-color: var(--card-bg); /* Grafik arkaplanı kart rengiyle aynı olsun */
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Hatırlatma Ayarları Alanı */
+.reminder-settings {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--input-border-color); /* Üstüne çizgi */
+  text-align: left;
+}
+
+.reminder-settings label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.reminder-settings input[type="time"] {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  transition: border-color 0.3s;
+}
+
+.reminder-settings input[type="time"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+/* Mobil Uyumlu Tasarım */
+@media (max-width: 650px) { /* Max genişliği biraz artırdım */
+  body {
+    padding: 15px;
+  }
+
+  main, header, #weeklyChart {
+    padding: 20px; /* Küçük ekranlarda padding azaltılabilir */
+    border-radius: 12px;
+  }
+
+  .add-water-buttons {
+    flex-direction: column; /* Küçük ekranlarda butonları alt alta diz */
+    gap: 10px; /* Alt alta gelince aralarındaki boşluk */
+  }
+
+  .add-water-buttons button {
+    width: 100%; /* Butonlar tüm genişliği kaplasın */
+    max-width: none; /* Maksimum genişlik sınırlamasını kaldır */
+    margin: 0; /* Üstteki margin: 5px'i geçersiz kılmak için */
+  }
+
+  .goal-settings input[type="number"] {
+    width: calc(100% - 24px); /* Padding ve kenarlığı düşerek genişlik */
+    margin-right: 0;
+    margin-bottom: 10px; /* Butonlarla arasına boşluk */
+    display: block; /* Inputu ayrı satıra al */
+  }
+
+  .goal-settings button {
+    width: 100%;
+    margin: 5px 0; /* Dikey boşluk */
+  }
 }
