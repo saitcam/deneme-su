@@ -11,10 +11,12 @@
   --progress-bar-color-initial: #2196F3; /* İlerleme çubuğu başlangıç rengi (mavi) */
   --progress-bar-color-complete: #4CAF50; /* İlerleme çubuğu tamamlanma rengi (yeşil) - JavaScript'te de kullanılıyor */
   --input-border-color: #ccc; /* Giriş alanı kenarlık rengi */
+  --border-color: #ccc;
+  --background-light: #ddd;
 }
 
 /* Koyu Mod Stilleri */
-body.dark-mode {
+body.dark-theme {
   --bg-color: #121212;
   --text-color: #f5f5f5;
   --card-bg: #1e1e1e;
@@ -26,11 +28,12 @@ body.dark-mode {
 
 /* Genel Body Stili */
 body {
-  margin: 0;
-  padding: 20px;
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,12 +43,20 @@ body {
 
 /* Başlık Alanı */
 header {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 15px 0;
+  font-size: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   width: 100%;
   max-width: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
+  transition: background-color 0.3s ease;
 }
 
 /* Ana İçerik Kartı */
@@ -58,6 +69,7 @@ main {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   text-align: left; /* İçeriği sola hizala */
   margin-bottom: 30px; /* Altına boşluk ekle */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Paragraf Stili */
@@ -69,21 +81,18 @@ p {
 
 /* Butonların Genel Stili */
 button {
-  background-color: var(--accent-color);
-  border: none;
+  background-color: #4caf50;
   color: white;
-  padding: 12px 24px;
-  margin: 5px; /* Butonlar arası boşluk */
-  font-size: 16px;
-  border-radius: 10px;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  display: inline-block; /* Butonları yan yana dizmek için */
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: var(--button-hover);
-  transform: scale(1.03); /* Hover efekti biraz küçültüldü */
+  background-color: #45a049;
 }
 
 /* Tema Değiştirme Butonu */
@@ -147,27 +156,21 @@ button:hover {
   text-align: center;
 }
 
-
 /* İlerleme Çubuğu Alanı */
 .progress-container {
-  width: 100%;
-  background-color: #e0e0e0; /* Açık tema için arkaplan */
-  body.dark-mode & {
-    background-color: #333; /* Koyu tema için arkaplan */
-  }
-  border-radius: 20px;
+  width: 80%;
+  background-color: var(--background-light);
+  border-radius: 10px;
+  margin: 20px auto;
   overflow: hidden;
-  height: 25px; /* Çubuk yüksekliği artırıldı */
-  margin-top: 20px;
-  margin-bottom: 10px; /* Metinle arasına boşluk */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .progress-bar {
-  height: 100%;
-  width: 0%; /* Başlangıçta genişlik 0 */
-  background-color: var(--progress-bar-color-initial); /* JavaScript'te güncelleniyor */
-  transition: width 0.4s ease; /* Genişlik değişimi animasyonu */
-  border-radius: 20px 0 0 20px; /* Sadece sol tarafı yuvarlak */
+  height: 20px;
+  width: 0;
+  background-color: var(--progress-bar-color-initial);
+  transition: width 0.5s ease;
 }
 
 #progressText {
@@ -180,21 +183,22 @@ button:hover {
 
 /* Grafik Alanı */
 #weeklyChart {
-  margin-top: 30px;
-  width: 100% !important; /* Grafik genişliğini ayarla */
-  max-width: 600px;
-  background-color: var(--card-bg); /* Grafik arkaplanı kart rengiyle aynı olsun */
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }
 
 /* Hatırlatma Ayarları Alanı */
 .reminder-settings {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid var(--input-border-color); /* Üstüne çizgi */
   text-align: left;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .reminder-settings label {
@@ -207,9 +211,11 @@ button:hover {
 .reminder-settings input[type="time"] {
   padding: 10px;
   margin-right: 10px;
-  border: 1px solid var(--input-border-color);
-  border-radius: 8px;
-  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin: 5px 0;
+  width: 100%;
+  max-width: 300px;
   color: var(--text-color);
   background-color: var(--card-bg);
   transition: border-color 0.3s;
@@ -223,7 +229,7 @@ button:hover {
 /* Mobil Uyumlu Tasarım */
 @media (max-width: 650px) { /* Max genişliği biraz artırdım */
   body {
-    padding: 15px;
+    padding: 10px; /* Daha az padding */
   }
 
   main, header, #weeklyChart {
@@ -239,11 +245,11 @@ button:hover {
   .add-water-buttons button {
     width: 100%; /* Butonlar tüm genişliği kaplasın */
     max-width: none; /* Maksimum genişlik sınırlamasını kaldır */
-    margin: 0; /* Üstteki margin: 5px'i geçersiz kılmak için */
+    margin: 5px 0; /* Daha az boşluk */
   }
 
   .goal-settings input[type="number"] {
-    width: calc(100% - 24px); /* Padding ve kenarlığı düşerek genişlik */
+    width: 100%; /* Daha basit bir genişlik ayarı */
     margin-right: 0;
     margin-bottom: 10px; /* Butonlarla arasına boşluk */
     display: block; /* Inputu ayrı satıra al */
