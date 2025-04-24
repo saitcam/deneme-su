@@ -1,62 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serayın Su Takipçisi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <header>
-    <h1>Serayın Su Takipçisi</h1>
-    <button id="theme-toggle">🌙</button>
-  </header>
+  <header>
+    <h1>Serayın Su Takipçisi</h1>
+    <button id="theme-toggle">🌙</button>
+  </header>
 
-  <main>
-    <p>Bugün içilen toplam su: <span id="total">0</span> ml</p>
+  <main>
+    <p>Bugün içilen toplam su: <span id="total">0</span> ml</p>
 
-        <div class="goal-settings" style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid var(--input-border-color);">
-      <label for="dailyGoal">Günlük Hedef (ml):</label>
-      <input type="number" id="dailyGoal" value="2000" min="500" step="100"/>
-      <button onclick="saveDailyGoal()">Hedefi Kaydet</button>
-      <button onclick="resetDailyGoal()">Hedefi Sıfırla</button>
-      <p>Mevcut Hedef: <span id="currentGoal">2000</span> ml</p>
-    </div>
-        <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <p id="progressText">0%</p>
+    <div class="goal-settings">
+      <label for="dailyGoal">Günlük Hedef (ml):</label>
+      <input type="number" id="dailyGoal" value="2000" min="500" step="100"/>
+      <button onclick="saveDailyGoal()">Hedefi Kaydet</button>
+      <button onclick="resetDailyGoal()">Hedefi Sıfırla</button>
+      <p>Mevcut Hedef: <span id="currentGoal">2000</span> ml</p>
+    </div>
 
-        <div class="add-water-buttons" style="margin-top: 20px;">
-      <button onclick="addWater(250)">+250 ml</button>
-      <button onclick="addWater(500)">+500 ml</button>
-      <button onclick="addWater(650)">+650 ml</button>
-    </div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p id="progressText">0%</p>
 
-    <button onclick="resetTotal()" style="margin-top: 10px;">Günlük Toplamı Sıfırla</button>
-  </main>
+    <div class="add-water-buttons">
+      <button onclick="addWater(250)">+250 ml</button>
+      <button onclick="addWater(500)">+500 ml</button>
+      <button onclick="addWater(650)">+650 ml</button>
+    </div>
 
-  <canvas id="weeklyChart" width="400" height="200"></canvas>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <button onclick="resetTotal()">Günlük Toplamı Sıfırla</button>
+  </main>
 
-    <div class="reminder-settings" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--input-border-color); text-align: left;">
-    <p>🔔 Her saat başında otomatik su içme hatırlatması aktif.</p>
-    <label for="reminderTime">🔔 Hatırlatma Saati:</label>
-    <input type="time" id="reminderTime" />
-    <button onclick="saveReminderTime()">Kaydet</button>
-    <p>Ayarlanan Hatırlatma: <span id="setReminderTime">-</span></p>
-  </div>
-    <script src="script.js"></script>
+  <canvas id="weeklyChart"></canvas>
 
-    <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(function(registration) {
-          console.log('Service Worker başarıyla kaydedildi:', registration);
-        })
-        .catch(function(error) {
-          console.log('Service Worker kaydedilemedi:', error);
-        });
-    }
+  <div class="reminder-settings">
+    <p>🔔 Her saat başında otomatik su içme hatırlatması aktif.</p>
+    <label for="reminderTime">🔔 Hatırlatma Saati:</label>
+    <input type="time" id="reminderTime" />
+    <button onclick="saveReminderTime()">Kaydet</button>
+    <p>Ayarlanan Hatırlatma: <span id="setReminderTime">-</span></p>
+  </div>
 
-    if ('Notification' in window && Notification.permission !== 'granted') {
-      Notification.requestPermission().then(function(permission) {
-        if (permission === 'granted') {
-          console.log('Bildirim izni verildi!');
-        }
-      });
-    }
-  </script>
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(function (registration) {
+          console.log('Service Worker başarıyla kaydedildi:', registration);
+        })
+        .catch(function (error) {
+          console.error('Service Worker kaydedilemedi:', error);
+        });
+    }
+
+    if ('Notification' in window) {
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === 'granted') {
+            console.log('Bildirim izni verildi!');
+          }
+        });
+      }
+    }
+  </script>
 </body>
+</html>

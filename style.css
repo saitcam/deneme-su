@@ -24,13 +24,19 @@ body.dark-mode {
   --input-border-color: #555;
 }
 
+.dark-theme {
+  --background-color: #333;
+  --text-color: #fff;
+}
+
 /* Genel Body Stili */
 body {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color, #f4f4f4);
+  color: var(--text-color, #333);
   margin: 0;
-  padding: 20px;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  padding: 0;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,6 +46,13 @@ body {
 
 /* Başlık Alanı */
 header {
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 0;
+  font-size: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   width: 100%;
   max-width: 600px;
   display: flex;
@@ -69,21 +82,18 @@ p {
 
 /* Butonların Genel Stili */
 button {
-  background-color: var(--accent-color);
-  border: none;
+  background-color: #4caf50;
   color: white;
-  padding: 12px 24px;
-  margin: 5px; /* Butonlar arası boşluk */
-  font-size: 16px;
-  border-radius: 10px;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  display: inline-block; /* Butonları yan yana dizmek için */
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: var(--button-hover);
-  transform: scale(1.03); /* Hover efekti biraz küçültüldü */
+  background-color: #45a049;
 }
 
 /* Tema Değiştirme Butonu */
@@ -147,27 +157,20 @@ button:hover {
   text-align: center;
 }
 
-
 /* İlerleme Çubuğu Alanı */
 .progress-container {
-  width: 100%;
-  background-color: #e0e0e0; /* Açık tema için arkaplan */
-  body.dark-mode & {
-    background-color: #333; /* Koyu tema için arkaplan */
-  }
-  border-radius: 20px;
+  width: 80%;
+  background-color: #ddd;
+  border-radius: 10px;
+  margin: 20px auto;
   overflow: hidden;
-  height: 25px; /* Çubuk yüksekliği artırıldı */
-  margin-top: 20px;
-  margin-bottom: 10px; /* Metinle arasına boşluk */
 }
 
 .progress-bar {
-  height: 100%;
-  width: 0%; /* Başlangıçta genişlik 0 */
-  background-color: var(--progress-bar-color-initial); /* JavaScript'te güncelleniyor */
-  transition: width 0.4s ease; /* Genişlik değişimi animasyonu */
-  border-radius: 20px 0 0 20px; /* Sadece sol tarafı yuvarlak */
+  height: 20px;
+  width: 0;
+  background-color: #4caf50;
+  transition: width 0.5s ease;
 }
 
 #progressText {
@@ -180,17 +183,17 @@ button:hover {
 
 /* Grafik Alanı */
 #weeklyChart {
-  margin-top: 30px;
-  width: 100% !important; /* Grafik genişliğini ayarla */
-  max-width: 600px;
-  background-color: var(--card-bg); /* Grafik arkaplanı kart rengiyle aynı olsun */
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }
 
 /* Hatırlatma Ayarları Alanı */
 .reminder-settings {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid var(--input-border-color); /* Üstüne çizgi */
@@ -207,9 +210,11 @@ button:hover {
 .reminder-settings input[type="time"] {
   padding: 10px;
   margin-right: 10px;
-  border: 1px solid var(--input-border-color);
-  border-radius: 8px;
-  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 5px 0;
+  width: 100%;
+  max-width: 300px;
   color: var(--text-color);
   background-color: var(--card-bg);
   transition: border-color 0.3s;
@@ -253,4 +258,34 @@ button:hover {
     width: 100%;
     margin: 5px 0; /* Dikey boşluk */
   }
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serayın Su Takipçisi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Mevcut kodlarınız -->
+</body>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(function (registration) {
+      console.log('Service Worker başarıyla kaydedildi:', registration);
+    })
+    .catch(function (error) {
+      console.error('Service Worker kaydedilemedi:', error);
+    });
+}
+
+if ('Notification' in window) {
+  if (Notification.permission !== 'granted') {
+    Notification.requestPermission().then(function (permission) {
+      if (permission === 'granted') {
+        console.log('Bildirim izni verildi!');
+      }
+    });
+  }
 }
