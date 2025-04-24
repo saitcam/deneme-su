@@ -34,8 +34,8 @@ function updateProgressBar() {
 
   // Hedef aşıldığında çubuğun rengini değiştirmek isterseniz burada yapabilirsiniz
   progressBar.style.backgroundColor = percentage >= 100 
-    ? "var(--progress-bar-color-complete)" 
-    : "var(--progress-bar-color-initial)";
+    ? "var(--progress-bar-complete-color)" 
+    : "var(--progress-bar-initial-color)";
 }
 
 // 💧 Su ekleme (HTML'deki butonlar doğrudan bu fonksiyonu çağıracak)
