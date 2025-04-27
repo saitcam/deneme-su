@@ -13,6 +13,7 @@ const setReminderTimeDisplay = document.getElementById("setReminderTime"); // Ay
 function saveReminderTime() {
   const reminderTime = document.getElementById('reminderTime').value;
   document.getElementById('setReminderTime').textContent = reminderTime || '-';
+  alert('Hatırlatma saati kaydedildi: ' + reminderTime);
 }
 
 // 💧 Toplam suyu ve ilerleme çubuğunu güncelle

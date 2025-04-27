@@ -215,9 +215,9 @@ button:hover {
     padding: 15px;
   }
 
-  .add-water-buttons {
-    flex-direction: column;
-    gap: 10px;
+  .add-water-buttons button {
+    flex: 1 1 100%;
+    margin: 5px 0;
   }
 
   .goal-settings input[type="number"] {
