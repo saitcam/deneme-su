@@ -33,9 +33,11 @@ function updateProgressBar() {
   progressText.textContent = Math.round(percentage) + "%";
 
   // Hedef aşıldığında çubuğun rengini değiştirmek isterseniz burada yapabilirsiniz
-  progressBar.style.backgroundColor = percentage >= 100 
-    ? "var(--progress-bar-complete-color)" 
-    : "var(--progress-bar-initial-color)";
+if (percentage >= 100) {
+  progressBar.style.backgroundColor = "#4CAF50"; // Yeşil (Hedefe ulaşıldı)
+} else {
+  progressBar.style.backgroundColor = "#2196F3"; // Mavi (Hedefe henüz ulaşılmadı)
+}
 }
 
 // 💧 Su ekleme (HTML'deki butonlar doğrudan bu fonksiyonu çağıracak)

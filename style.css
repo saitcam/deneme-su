@@ -23,6 +23,7 @@ body.dark-theme {
   --accent-color: #81c784;
   --button-hover: #66bb6a;
   --progress-bar-color-initial: #64b5f6;
+  --progress-bar-color-complete: #81c784;
   --input-border-color: #555;
 }
 
@@ -88,11 +89,12 @@ button {
   margin: 5px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
   background-color: var(--button-hover);
+  transform: scale(1.05);
 }
 
 /* Tema Değiştirme Butonu */
@@ -165,19 +167,66 @@ button:hover {
   transition: width 0.5s ease, background-color 0.3s ease;
 }
 
-/* Mobil Uyum */
+/* Grafik Alanı */
+#weeklyChart {
+  margin-top: 30px;
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Hatırlatma Ayarları Alanı */
+.reminder-settings {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--input-border-color);
+  text-align: left;
+}
+
+.reminder-settings label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.reminder-settings input[type="time"] {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  transition: border-color 0.3s;
+}
+
+.reminder-settings input[type="time"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+/* Mobil Uyumlu Tasarım */
 @media (max-width: 650px) {
   body {
-    padding: 10px;
+    padding: 15px;
   }
 
-  .add-water-buttons button {
-    flex: 1 1 100%;
-    margin: 5px 0;
+  .add-water-buttons {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .goal-settings input[type="number"] {
     width: 100%;
     margin-bottom: 10px;
+  }
+
+  .goal-settings button {
+    width: 100%;
+    margin: 5px 0;
   }
 }
