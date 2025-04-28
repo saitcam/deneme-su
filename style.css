@@ -46,18 +46,37 @@ body {
 header {
   background-color: var(--accent-color);
   color: white;
-  padding: 15px 0;
-  font-size: 24px;
+  padding: 20px 0;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-  transition: background-color 0.3s ease;
+}
+
+header h1 {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 1px;
+}
+
+#theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.2);
 }
 
 /* Ana İçerik Kartı */
