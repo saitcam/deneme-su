@@ -29,7 +29,7 @@
     <button onclick="resetTotal()">Günlük Toplamı Sıfırla</button>
   </main>
 
-  <canvas id="weeklyChart"></canvas>
+  <canvas id="weeklyChart" width="400" height="200"></canvas>
 
   <div class="reminder-settings">
     <p>🔔 Her saat başında otomatik su içme hatırlatması aktif.</p>
@@ -41,6 +41,7 @@
 
   <button id="enable-notifications">Bildirimleri Etkinleştir</button>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
   <link rel="stylesheet" href="style.css">
   <script>
