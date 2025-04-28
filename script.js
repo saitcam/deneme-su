@@ -73,7 +73,7 @@ function saveDailyGoal() {
     localStorage.setItem("dailyGoal", dailyGoal); // Hedefi kaydet
     currentGoalDisplay.textContent = dailyGoal; // Mevcut hedefi göster
     updateProgressBar(); // Hedef değişince ilerleme çubuğunu güncelle
-    alert("Günlük hedef kaydedildi: " + dailyGoal + " ml");
+    showToast("Günlük hedef kaydedildi: " + dailyGoal + " ml");
   } else {
     alert("Geçerli bir hedef miktarı girin.");
     dailyGoalInput.value = dailyGoal; // Geçersiz girişte eski değeri geri getir
@@ -87,7 +87,7 @@ function resetDailyGoal() {
   dailyGoalInput.value = dailyGoal; // Giriş alanını güncelle
   currentGoalDisplay.textContent = dailyGoal; // Mevcut hedefi göster
   updateProgressBar(); // Hedef değişince ilerleme çubuğunu güncelle
-  alert("Günlük hedef varsayılana (2000 ml) sıfırlandı.");
+  showToast("Günlük hedef varsayılana (2000 ml) sıfırlandı.");
 }
 
 // 📅 Bugünün verisini alma (Mevcut fonksiyon, değişiklik yok)
@@ -151,15 +151,18 @@ function updateChart() {
 }
 
 // 🌙 Tema geçişi (Mevcut fonksiyon, değişiklik yok)
-toggleButton.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  toggleButton.textContent = isDark ? '🌞' : '🌙';
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-});
-
 document.getElementById('theme-toggle').addEventListener('click', function () {
   document.body.classList.toggle('dark-theme');
+  const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+  localStorage.setItem('theme', theme);
+});
+
+// Sayfa yüklendiğinde tema durumunu kontrol et
+window.addEventListener('load', function () {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+  }
 });
 
 // 🔔 Bildirim gönderme (Mevcut fonksiyon, değişiklik yok)
@@ -238,3 +241,59 @@ if ('serviceWorker' in navigator) {
     .then(reg => console.log("✅ Service Worker kayıtlı:", reg))
     .catch(err => console.error("❌ SW hatası:", err));
 }
+
+// 🔔 Bildirimleri etkinleştirme
+if ('Notification' in window) {
+  document.getElementById('enable-notifications').addEventListener('click', function () {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        new Notification('Bildirimler etkinleştirildi!', { body: 'Artık su hatırlatmaları alacaksınız.' });
+      } else {
+        alert('Bildirim izni reddedildi.');
+      }
+    });
+  });
+}
+
+// 🍞 Toast mesajı gösterme
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.position = 'fixed';
+  toast.style.bottom = '20px';
+  toast.style.left = '50%';
+  toast.style.transform = 'translateX(-50%)';
+  toast.style.backgroundColor = '#4caf50';
+  toast.style.color = 'white';
+  toast.style.padding = '10px 20px';
+  toast.style.borderRadius = '5px';
+  toast.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+  toast.style.zIndex = '1000';
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+const ctx = document.getElementById('weeklyChart').getContext('2d');
+const weeklyChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'],
+    datasets: [{
+      label: 'İçilen Su (ml)',
+      data: [500, 1000, 1500, 2000, 2500, 3000, 3500], // Örnek veriler
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});

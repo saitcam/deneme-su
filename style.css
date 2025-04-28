@@ -80,7 +80,7 @@ p {
   line-height: 1.5;
 }
 
-/* Butonların Genel Stili */
+/* Genel Buton Stili */
 button {
   background-color: var(--accent-color);
   color: white;
@@ -215,9 +215,9 @@ button:hover {
     padding: 15px;
   }
 
-  .add-water-buttons button {
-    flex: 1 1 100%;
-    margin: 5px 0;
+  .add-water-buttons {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .goal-settings input[type="number"] {
