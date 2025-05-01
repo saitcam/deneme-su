@@ -4,9 +4,9 @@
 /* CSS Değişkenleri */
 :root {
   --primary-color: #ff69b4;
-  --secondary-color: #ffb6c1;
-  --background-color: #fff5f7;
-  --text-color: #4a4a4a;
+  --secondary-color: #ff8ac1;
+  --background-color: #fff0f5;
+  --text-color: #333333;
   --card-bg: white;
   --bg-color: #f4f4f4;
   --accent-color: #4caf50;
@@ -40,75 +40,26 @@ body.dark-theme {
 
 /* Genel Body Stili */
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 15px;
-  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
+  max-width: 600px;
+  margin: 0 auto;
   transition: all 0.3s ease;
 }
 
 /* Başlık Alanı */
 header {
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  padding: 15px;
-  font-size: 28px;
-  font-weight: bold;
   text-align: center;
-  border-radius: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: center; /* Başlığı yatay olarak ortalar */
-  align-items: center; /* Başlığı dikey olarak ortalar */
-  gap: 10px; /* Simge ve metin arasındaki boşluk */
   margin-bottom: 20px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 header h1 {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  align-items: center;
-}
-
-header h1::before {
-  content: "💧"; /* Başlık öncesine bir simge ekler */
-  font-size: 32px;
-}
-
-#theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  border: none;
+  color: #ff69b4;
   font-size: 24px;
-  cursor: pointer;
-  color: white;
-  padding: 8px;
-  border-radius: 50%;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-#theme-toggle:hover {
-  transform: scale(1.1);
-  background-color: rgba(255, 255, 255, 0.1);
+  margin: 0;
 }
 
 /* Ana İçerik Kartı */
@@ -156,15 +107,22 @@ button:active {
   transform: scale(0.98);
 }
 
-/* Tema Değiştirme Butonu */
-#theme-toggle {
-  background-color: transparent;
-  font-size: 24px;
+/* Su Ekleme ve Hedef Butonları */
+.water-button, .goal-button {
+  background: linear-gradient(45deg, #ff69b4, #ff8ac1);
+  color: white;
   border: none;
-  cursor: pointer;
-  color: var(--text-color);
-  margin: 0;
-  padding: 5px;
+  padding: 15px;
+  border-radius: 25px;
+  font-size: 16px;
+  width: 100%;
+  margin: 8px 0;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.water-button:active, .goal-button:active {
+  transform: scale(0.98);
 }
 
 /* Günlük Hedef Ayarları Alanı */
@@ -219,20 +177,17 @@ button:active {
 
 /* İlerleme Çubuğu */
 .progress-container {
-  background: #f0f0f0;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
   overflow: hidden;
   margin: 15px 0;
-  width: 100%;
-  max-width: 600px; /* İçeriği sınırlamak için */
-  margin: 10px auto;
-  text-align: center;
+  height: 20px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .progress-bar {
-  height: 20px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  width: 0%;
+  height: 100%;
+  background: linear-gradient(45deg, #ff69b4, #ff8ac1);
   transition: width 0.3s ease;
 }
 
@@ -318,11 +273,10 @@ reminder-settings input[type="time"]:focus {
 
 .message-card, .water-card, .goal-card {
   background: var(--card-bg);
-  padding: 15px;
-  border-radius: 15px;
+  padding: 20px;
+  border-radius: 20px;
   margin-bottom: 20px;
-  text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .goal-input {
@@ -334,13 +288,12 @@ reminder-settings input[type="time"]:focus {
 }
 
 .goal-input input {
-  width: 120px;
+  border: 2px solid #ff69b4;
+  border-radius: 15px;
   padding: 10px;
-  border: 2px solid var(--primary-color);
-  border-radius: 25px;
   font-size: 16px;
+  width: 120px;
   text-align: center;
-  outline: none;
 }
 
 .goal-input span {
@@ -389,6 +342,17 @@ reminder-settings input[type="time"]:focus {
   button {
     width: 100%;
     margin: 5px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .water-button, .goal-button {
+    font-size: 15px;
+    padding: 12px;
   }
 }
 

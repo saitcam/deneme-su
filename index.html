@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Su Takipçisi 💕</title>
+    <title>Seray'ın Su Takipçisi 💕</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1>💖 Sera'nın Su Takipçisi 💧</h1>
+        <h1>💝 Seray'ın Su Takipçisi 💧</h1>
         <button id="theme-toggle" onclick="toggleDarkMode()">🌙</button>
     </header>
 
     <main>
         <div class="message-card">
-            <p id="motivationMessage">Günaydın Seray! Bugün kendine iyi bak ve su içmeyi unutma 💕</p>
+            <p id="motivationMessage">Günaydın Seray! Bugün kendine iyi bak ve su içmeyi unutma 💝</p>
         </div>
 
         <div class="water-card">
@@ -27,18 +27,24 @@
         </div>
 
         <div class="quick-add">
-            <button onclick="addWater(250)">💧 Küçük Bardak (250ml)</button>
-            <button onclick="addWater(500)">💧 Büyük Bardak (500ml)</button>
-            <button onclick="addWater(750)">💧 Şişe (750ml)</button>
+            <button onclick="addWater(250)" class="water-button">
+                💧 Küçük Bardak (250ml)
+            </button>
+            <button onclick="addWater(500)" class="water-button">
+                💧 Büyük Bardak (500ml)
+            </button>
+            <button onclick="addWater(750)" class="water-button">
+                💧 Şişe (750ml)
+            </button>
         </div>
 
         <div class="goal-card">
-            <h2>Günlük Hedef Ayarla</h2>
+            <h3>Günlük Hedef Ayarla</h3>
             <div class="goal-input">
-                <input type="number" id="dailyGoalInput" min="500" step="100" value="2000">
+                <input type="number" id="dailyGoalInput" min="500" step="250" value="2000">
                 <span>ml</span>
             </div>
-            <button onclick="saveDailyGoal()">Hedefi Kaydet 💝</button>
+            <button onclick="saveDailyGoal()" class="goal-button">Hedefi Kaydet 💝</button>
             <p>Mevcut Hedef: <span id="currentGoal">2000</span> ml</p>
         </div>
     </main>
