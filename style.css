@@ -38,6 +38,13 @@ body.dark-theme {
   --input-border-color: #555;
 }
 
+/* Genel Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 /* Genel Body Stili */
 body {
   margin: 0;
@@ -47,6 +54,7 @@ body {
   color: var(--text-color);
   max-width: 600px;
   margin: 0 auto;
+  min-height: 100vh;
   transition: all 0.3s ease;
 }
 
@@ -57,7 +65,7 @@ header {
 }
 
 header h1 {
-  color: #ff69b4;
+  color: var(--primary-color);
   font-size: 24px;
   margin: 0;
 }
@@ -109,7 +117,7 @@ button:active {
 
 /* Su Ekleme ve Hedef Butonları */
 .water-button, .goal-button {
-  background: linear-gradient(45deg, #ff69b4, #ff8ac1);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   color: white;
   border: none;
   padding: 15px;
@@ -119,6 +127,7 @@ button:active {
   margin: 8px 0;
   box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
   transition: transform 0.2s ease;
+  cursor: pointer;
 }
 
 .water-button:active, .goal-button:active {
@@ -187,8 +196,9 @@ button:active {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(45deg, #ff69b4, #ff8ac1);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   transition: width 0.3s ease;
+  width: 0%;
 }
 
 /* Grafik Alanı */
@@ -288,12 +298,13 @@ reminder-settings input[type="time"]:focus {
 }
 
 .goal-input input {
-  border: 2px solid #ff69b4;
+  border: 2px solid var(--primary-color);
   border-radius: 15px;
   padding: 10px;
   font-size: 16px;
   width: 120px;
   text-align: center;
+  outline: none;
 }
 
 .goal-input span {
@@ -304,6 +315,29 @@ reminder-settings input[type="time"]:focus {
 .goal-card h2 {
   color: var(--primary-color);
   margin-top: 0;
+}
+
+/* Animasyon Stilleri */
+.water-drop {
+  position: fixed;
+  pointer-events: none;
+  animation: dropAnimation 1s ease-in forwards;
+  z-index: 1000;
+}
+
+@keyframes dropAnimation {
+  0% {
+    transform: translateY(-20px) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(0) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(20px) scale(1);
+    opacity: 0;
+  }
 }
 
 /* Mobil Uyumlu Tasarım */
@@ -366,22 +400,22 @@ reminder-settings input[type="time"]:focus {
 
 /* Toast Bildirimleri */
 .toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--primary-color);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 25px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
 }
 
 .toast.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(-20px);
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-20px);
 }
