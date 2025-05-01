@@ -3,9 +3,12 @@
 
 /* CSS Değişkenleri */
 :root {
+  --primary-color: #ff69b4;
+  --secondary-color: #ffb6c1;
+  --background-color: #fff5f7;
+  --text-color: #4a4a4a;
+  --card-bg: white;
   --bg-color: #f4f4f4;
-  --text-color: #333;
-  --card-bg: #fff;
   --accent-color: #4caf50;
   --button-hover: #43a047;
   --progress-bar-color-initial: #2196F3;
@@ -13,13 +16,17 @@
   --input-border-color: #ccc;
   --border-color: #ccc;
   --background-light: #ddd;
-  --primary-color: #ff69b4;
-  --secondary-color: #ffb6c1;
-  --background-color: #fff5f7;
-  --text-color: #4a4a4a;
 }
 
 /* Koyu Mod Stilleri */
+[data-theme="dark"] {
+  --primary-color: #ff69b4;
+  --secondary-color: #d64b8f;
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --card-bg: #2d2d2d;
+}
+
 body.dark-theme {
   --bg-color: #121212;
   --text-color: #f5f5f5;
@@ -39,6 +46,7 @@ body {
   text-align: center;
   background-color: var(--background-color);
   color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 /* Başlık Alanı */
@@ -51,7 +59,7 @@ header {
   text-align: center;
   border-radius: 15px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 1000;
   display: flex;
@@ -85,18 +93,22 @@ header h1::before {
 }
 
 #theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
   background: transparent;
   border: none;
   font-size: 24px;
   cursor: pointer;
   color: white;
-  transition: transform 0.3s ease;
-  position: absolute;
-  right: 20px; /* Sağ üst köşeye sabitler */
+  padding: 8px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 #theme-toggle:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Ana İçerik Kartı */
@@ -304,8 +316,8 @@ reminder-settings input[type="time"]:focus {
   text-align: center;
 }
 
-.message-card {
-  background: white;
+.message-card, .water-card, .goal-card {
+  background: var(--card-bg);
   padding: 15px;
   border-radius: 15px;
   margin-bottom: 20px;
@@ -313,13 +325,32 @@ reminder-settings input[type="time"]:focus {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.water-card, .goal-card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
+.goal-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.goal-input input {
+  width: 120px;
+  padding: 10px;
+  border: 2px solid var(--primary-color);
+  border-radius: 25px;
+  font-size: 16px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.goal-input span {
+  color: var(--text-color);
+  font-size: 16px;
+}
+
+.goal-card h2 {
+  color: var(--primary-color);
+  margin-top: 0;
 }
 
 /* Mobil Uyumlu Tasarım */
@@ -367,4 +398,26 @@ reminder-settings input[type="time"]:focus {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+
+/* Toast Bildirimleri */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-20px);
 }

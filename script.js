@@ -1,5 +1,5 @@
 let total = 0;
-const dailyGoal = 2000;
+let dailyGoal = 2000; // Varsayılan hedef
 
 const motivationalMessages = [
     "Harika gidiyorsun! 💖",
@@ -45,9 +45,33 @@ function resetTotal() {
 }
 
 function saveDailyGoal() {
-  dailyGoal = parseInt(dailyGoalInput.value) || 2000;
-  currentGoalDisplay.textContent = dailyGoal;
-  updateDisplay();
+    const newGoal = parseInt(document.getElementById('dailyGoalInput').value);
+    if (newGoal >= 500) {
+        dailyGoal = newGoal;
+        localStorage.setItem('dailyGoal', dailyGoal);
+        document.getElementById('currentGoal').textContent = dailyGoal;
+        updateDisplay();
+        showToast('Yeni hedefin kaydedildi! 🎯');
+    } else {
+        showToast('Lütfen en az 500ml bir hedef belirle! 💦');
+    }
+}
+
+// Toast bildirimi gösterme fonksiyonu
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
 }
 
 function resetDailyGoal() {
@@ -169,22 +193,41 @@ window.addEventListener('load', function() {
   }
 });
 
-document.getElementById('theme-toggle').addEventListener('click', function () {
-  document.body.classList.toggle('dark-theme');
-  const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-  localStorage.setItem('theme', theme);
-});
+function toggleDarkMode() {
+    const body = document.documentElement;
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    const themeButton = document.getElementById('theme-toggle');
+    themeButton.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    
+    showToast(newTheme === 'dark' ? 'Karanlık mod aktif 🌙' : 'Aydınlık mod aktif ☀️');
+}
 
 // Sayfa yüklendiğinde tema durumunu kontrol et
-window.addEventListener('load', function () {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-  }
+window.addEventListener('load', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    }
+});
+
+document.getElementById('theme-toggle').addEventListener('click', function () {
+  toggleDarkMode();
 });
 
 // Sayfa yüklendiğinde
 window.addEventListener('load', () => {
+    const savedGoal = localStorage.getItem('dailyGoal');
+    if (savedGoal) {
+        dailyGoal = parseInt(savedGoal);
+        document.getElementById('dailyGoalInput').value = dailyGoal;
+        document.getElementById('currentGoal').textContent = dailyGoal;
+    }
     loadProgress();
     showMotivationalMessage();
     

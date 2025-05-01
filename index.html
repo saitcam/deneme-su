@@ -10,12 +10,12 @@
 <body>
     <header>
         <h1>💖 Sera'nın Su Takipçisi 💧</h1>
-        <button id="theme-toggle">🌙</button>
+        <button id="theme-toggle" onclick="toggleDarkMode()">🌙</button>
     </header>
 
     <main>
         <div class="message-card">
-            <p id="motivationMessage">Günaydın Sera! Bugün kendine iyi bak ve su içmeyi unutma 💕</p>
+            <p id="motivationMessage">Günaydın Seray! Bugün kendine iyi bak ve su içmeyi unutma 💕</p>
         </div>
 
         <div class="water-card">
@@ -33,8 +33,13 @@
         </div>
 
         <div class="goal-card">
-            <p>Günlük Hedef: <span id="currentGoal">2000</span> ml</p>
-            <button onclick="resetTotal()">Günü Sıfırla 🔄</button>
+            <h2>Günlük Hedef Ayarla</h2>
+            <div class="goal-input">
+                <input type="number" id="dailyGoalInput" min="500" step="100" value="2000">
+                <span>ml</span>
+            </div>
+            <button onclick="saveDailyGoal()">Hedefi Kaydet 💝</button>
+            <p>Mevcut Hedef: <span id="currentGoal">2000</span> ml</p>
         </div>
     </main>
 
