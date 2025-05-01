@@ -23,7 +23,7 @@ const motivationMessage = document.getElementById("motivationMessage");
 function addWater(amount) {
     total += amount;
     updateDisplay();
-    createWaterDropAnimation();
+    showWaterDropAnimation();
     showRandomMotivation();
     saveProgress();
 }
@@ -37,12 +37,10 @@ function updateDisplay() {
 }
 
 // Su damlası animasyonu
-function createWaterDropAnimation() {
+function showWaterDropAnimation() {
     const drop = document.createElement('div');
-    drop.className = 'water-drop';
-    drop.innerHTML = '💧';
-    drop.style.fontSize = '40px';
-    drop.style.left = `${Math.random() * window.innerWidth}px`;
+    drop.className = 'water-drop-anim';
+    drop.textContent = '💧';
     document.body.appendChild(drop);
 
     setTimeout(() => {
@@ -118,6 +116,18 @@ function resetTotal() {
 window.addEventListener('load', () => {
     loadProgress();
     showRandomMotivation();
+    // Eğer kullanıcı daha önce tema seçmediyse, sistem temasını uygula
+    if (!localStorage.getItem('theme')) {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('theme-toggle').textContent = '☀️';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.getElementById('theme-toggle').textContent = '🌙';
+        }
+    }
+    autoDarkModeByTime();
+    setInterval(autoDarkModeByTime, 60 * 60 * 1000); // Her saat başı kontrol
 });
 
 // Her gece yarısı toplamı sıfırla
@@ -129,3 +139,28 @@ function checkDayReset() {
 }
 
 setInterval(checkDayReset, 60000); // Her dakika kontrol et
+
+function toggleDarkMode() {
+    const body = document.documentElement;
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.getElementById('theme-toggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('themeSelected', 'true');
+}
+
+// Otomatik geçişte kontrol:
+function autoDarkModeByTime() {
+    if (localStorage.getItem('themeSelected') === 'true') return;
+    const hour = new Date().getHours();
+    if (hour >= 20 || hour < 7) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('theme-toggle').textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.getElementById('theme-toggle').textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+    }
+}

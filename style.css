@@ -340,6 +340,31 @@ reminder-settings input[type="time"]:focus {
   }
 }
 
+@keyframes waterDrop {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(40px) scale(1);
+    }
+}
+
+.water-drop-anim {
+    position: fixed;
+    left: 50%;
+    top: 30%;
+    font-size: 48px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: waterDrop 1s ease-out forwards;
+}
+
 /* Mobil Uyumlu Tasarım */
 @media (max-width: 650px) {
   body {
