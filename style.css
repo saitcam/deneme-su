@@ -41,7 +41,7 @@ body {
 header {
   background: linear-gradient(90deg, #4caf50, #81c784);
   color: white;
-  padding: 10px 20px;
+  padding: 20px 0;
   font-size: 28px;
   font-weight: bold;
   text-align: center;
@@ -51,8 +51,9 @@ header {
   top: 0;
   z-index: 1000;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Başlığı yatay olarak ortalar */
+  align-items: center; /* Başlığı dikey olarak ortalar */
+  gap: 10px; /* Simge ve metin arasındaki boşluk */
 }
 
 @keyframes fadeIn {
@@ -71,11 +72,10 @@ header h1 {
   font-family: 'Inter', sans-serif;
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 header h1::before {
-  content: "💧";
+  content: "💧"; /* Başlık öncesine bir simge ekler */
   font-size: 32px;
 }
 
@@ -86,6 +86,8 @@ header h1::before {
   cursor: pointer;
   color: white;
   transition: transform 0.3s ease;
+  position: absolute;
+  right: 20px; /* Sağ üst köşeye sabitler */
 }
 
 #theme-toggle:hover {
@@ -103,6 +105,12 @@ main {
   text-align: left;
   margin-bottom: 30px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh; /* Ana kısmı dikey olarak ortalamak için */
+  margin: 0 auto;
 }
 
 /* Paragraf Stili */
@@ -144,6 +152,10 @@ button:hover {
   margin-bottom: 25px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--input-border-color);
+  width: 100%;
+  max-width: 600px; /* İçeriği sınırlamak için */
+  margin: 10px auto;
+  text-align: center;
 }
 
 .goal-settings label {
@@ -174,6 +186,10 @@ button:hover {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 600px; /* İçeriği sınırlamak için */
+  margin: 10px auto;
+  text-align: center;
 }
 
 .add-water-buttons button {
@@ -189,6 +205,10 @@ button:hover {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px; /* İçeriği sınırlamak için */
+  margin: 10px auto;
+  text-align: center;
 }
 
 .progress-bar {
