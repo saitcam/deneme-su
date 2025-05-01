@@ -29,22 +29,17 @@ body.dark-theme {
 
 /* Genel Body Stili */
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--bg-color, #f4f4f4);
+  color: var(--text-color, #333);
 }
 
 /* Başlık Alanı */
 header {
-  background-color: var(--accent-color);
+  background: linear-gradient(90deg, #4caf50, #81c784);
   color: white;
   padding: 20px 0;
   font-size: 28px;
@@ -55,6 +50,18 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 header h1 {
@@ -101,19 +108,18 @@ p {
 
 /* Genel Buton Stili */
 button {
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 10px 20px;
   margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #4caf50;
+  color: white;
 }
 
 button:hover {
-  background-color: var(--button-hover);
-  transform: scale(1.05);
+  background-color: #45a049;
 }
 
 /* Tema Değiştirme Butonu */
@@ -171,30 +177,27 @@ button:hover {
 
 /* İlerleme Çubuğu */
 .progress-container {
-  width: 100%;
-  max-width: 600px;
-  background-color: var(--background-light);
+  width: 80%;
+  margin: 20px auto;
+  background: #e0e0e0;
   border-radius: 10px;
-  margin: 20px 0;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 20px;
-  width: 0;
-  background-color: var(--progress-bar-color-initial);
-  transition: width 0.5s ease, background-color 0.3s ease;
+  background: #4caf50;
+  width: 0%;
 }
 
 /* Grafik Alanı */
 #weeklyChart {
-  margin-top: 30px;
-  width: 100%;
+  margin: 20px auto;
   max-width: 600px;
-  background-color: var(--card-bg);
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
 
 /* Hatırlatma Ayarları Alanı */
