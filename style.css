@@ -13,6 +13,10 @@
   --input-border-color: #ccc;
   --border-color: #ccc;
   --background-light: #ddd;
+  --primary-color: #ff69b4;
+  --secondary-color: #ffb6c1;
+  --background-color: #fff5f7;
+  --text-color: #4a4a4a;
 }
 
 /* Koyu Mod Stilleri */
@@ -31,22 +35,22 @@ body.dark-theme {
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 15px;
   text-align: center;
-  background-color: var(--bg-color, #f4f4f4);
-  color: var(--text-color, #333);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* Başlık Alanı */
 header {
-  background: linear-gradient(90deg, #4caf50, #81c784);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   color: white;
-  padding: 20px 0;
+  padding: 15px;
   font-size: 28px;
   font-weight: bold;
   text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -54,6 +58,7 @@ header {
   justify-content: center; /* Başlığı yatay olarak ortalar */
   align-items: center; /* Başlığı dikey olarak ortalar */
   gap: 10px; /* Simge ve metin arasındaki boşluk */
+  margin-bottom: 20px;
 }
 
 @keyframes fadeIn {
@@ -122,18 +127,21 @@ p {
 
 /* Genel Buton Stili */
 button {
-  margin: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #4caf50;
+  background: var(--primary-color);
   color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 300px;
 }
 
-button:hover {
-  background-color: #45a049;
+button:active {
+  transform: scale(0.98);
 }
 
 /* Tema Değiştirme Butonu */
@@ -199,12 +207,10 @@ button:hover {
 
 /* İlerleme Çubuğu */
 .progress-container {
-  width: 80%;
-  margin: 20px auto;
-  background: #e0e0e0;
+  background: #f0f0f0;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 15px 0;
   width: 100%;
   max-width: 600px; /* İçeriği sınırlamak için */
   margin: 10px auto;
@@ -213,15 +219,26 @@ button:hover {
 
 .progress-bar {
   height: 20px;
-  background: linear-gradient(90deg, #4caf50, #81c784);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   width: 0%;
-  transition: width 0.5s ease;
+  transition: width 0.3s ease;
 }
 
 /* Grafik Alanı */
 #weeklyChart {
   margin: 20px auto;
-  max-width: 600px;
+  max-width: 400px; /* Genişliği küçült */
+  height: 200px; /* Yüksekliği küçült */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+#dailyChart {
+  margin: 20px auto;
+  max-width: 300px;
+  height: 150px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -254,7 +271,7 @@ button:hover {
   transition: border-color 0.3s;
 }
 
-.reminder-settings input[type="time"]:focus {
+reminder-settings input[type="time"]:focus {
   outline: none;
   border-color: var(--accent-color);
 }
@@ -274,6 +291,35 @@ button:hover {
 #enable-notifications:hover {
   background-color: #45a049;
   transform: scale(1.05);
+}
+
+/* Kart Stili */
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+.message-card {
+  background: white;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.water-card, .goal-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Mobil Uyumlu Tasarım */
@@ -313,4 +359,12 @@ button:hover {
     width: 100%;
     margin: 5px 0;
   }
+}
+
+/* Hızlı Ekleme Alanı */
+.quick-add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }

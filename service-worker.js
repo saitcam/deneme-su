@@ -16,13 +16,33 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   if (event.action === 'drink-water') {
+    // Su içtim eylemi
     console.log('Kullanıcı su içtiğini bildirdi.');
   } else if (event.action === 'snooze') {
+    // Erteleme eylemi
     console.log('Kullanıcı hatırlatmayı erteledi.');
-  } else {
-    event.waitUntil(
-      clients.openWindow('https://imaginative-meerkat-24d0f9.netlify.app/')
-    );
   }
   event.notification.close();
+});
+
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open('water-tracker-cache').then(function(cache) {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/style.css',
+        '/script.js',
+        '/icon.png'
+      ]);
+    })
+  );
+});
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request).then(function(response) {
+      return response || fetch(event.request);
+    })
+  );
 });

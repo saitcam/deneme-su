@@ -1,5 +1,14 @@
 let total = 0;
-let dailyGoal = 2000;
+const dailyGoal = 2000;
+
+const motivationalMessages = [
+    "Harika gidiyorsun! 💖",
+    "Su içmeyi unutma tatlım! 💕",
+    "Sağlıklı ve güzel bir gün geçirmen dileğiyle! 🌸",
+    "Her bardak su, daha sağlıklı bir sen demek! ✨",
+    "Günlük hedefine yaklaşıyorsun! 🎯",
+    "Su içmek cildini güzelleştirir! 💫"
+];
 
 const totalDisplay = document.getElementById("total");
 const dailyGoalInput = document.getElementById("dailyGoal");
@@ -17,17 +26,22 @@ function saveReminderTime() {
 }
 
 function addWater(amount) {
-  total += amount;
-  updateDisplay();
+    total += amount;
+    updateDisplay();
+    showMotivationalMessage();
+    checkGoal();
+    saveProgress();
 
-  const today = new Date().getDay();
-  weeklyData[today] += amount;
-  updateWeeklyChart();
+    const today = new Date().getDay();
+    weeklyData[today] += amount;
+    updateWeeklyChart();
 }
 
 function resetTotal() {
-  total = 0;
-  updateDisplay();
+    total = 0;
+    updateDisplay();
+    saveProgress();
+    showMotivationalMessage();
 }
 
 function saveDailyGoal() {
@@ -44,15 +58,38 @@ function resetDailyGoal() {
 }
 
 function updateDisplay() {
-  totalDisplay.textContent = total;
-  const percentage = Math.min((total / dailyGoal) * 100, 100);
-  progressBar.style.width = percentage + "%";
-  progressText.textContent = Math.round(percentage) + "%";
+    totalDisplay.textContent = total;
+    const percentage = Math.min((total / dailyGoal) * 100, 100);
+    progressBar.style.width = percentage + "%";
+    progressText.textContent = Math.round(percentage) + "%";
 }
 
 function updateWeeklyChart() {
   weeklyChart.data.datasets[0].data = weeklyData;
   weeklyChart.update();
+}
+
+function showMotivationalMessage() {
+    const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+    document.getElementById("motivationMessage").textContent = randomMessage;
+}
+
+function checkGoal() {
+    if (total >= dailyGoal) {
+        showNotification("Günlük hedefine ulaştın! Harikasın! 🎉");
+    }
+}
+
+function saveProgress() {
+    localStorage.setItem('waterTotal', total);
+}
+
+function loadProgress() {
+    const savedTotal = localStorage.getItem('waterTotal');
+    if (savedTotal) {
+        total = parseInt(savedTotal);
+        updateDisplay();
+    }
 }
 
 const ctx = document.getElementById('weeklyChart').getContext('2d');
@@ -63,28 +100,36 @@ const weeklyChart = new Chart(ctx, {
     datasets: [{
       label: 'İçilen Su (ml)',
       data: [500, 1000, 1500, 2000, 1800, 2200, 2500],
-      backgroundColor: [
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 99, 132, 0.2)'
-      ],
-      borderColor: [
-        'rgba(75, 192, 192, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-        'rgba(255, 99, 132, 1)'
-      ],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
       borderWidth: 1
     }]
   },
   options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+const ctxDaily = document.getElementById('dailyChart').getContext('2d');
+const dailyChart = new Chart(ctxDaily, {
+  type: 'line',
+  data: {
+    labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'],
+    datasets: [{
+      label: 'İçilen Su (ml)',
+      data: [250, 500, 750, 1000, 1250, 1500, 1750],
+      borderColor: '#4caf50',
+      backgroundColor: 'rgba(76, 175, 80, 0.2)',
+      borderWidth: 2,
+      fill: true
+    }]
+  },
+  options: {
+    responsive: true,
     scales: {
       y: {
         beginAtZero: true
@@ -110,6 +155,20 @@ function scheduleNotification(time) {
   }
 }
 
+function saveUserName() {
+  const userName = document.getElementById('userName').value;
+  localStorage.setItem('userName', userName);
+  document.getElementById('greetingName').textContent = userName || 'Kullanıcı';
+}
+
+// Sayfa yüklendiğinde kullanıcı adını kontrol et
+window.addEventListener('load', function() {
+  const savedName = localStorage.getItem('userName');
+  if (savedName) {
+    document.getElementById('greetingName').textContent = savedName;
+  }
+});
+
 document.getElementById('theme-toggle').addEventListener('click', function () {
   document.body.classList.toggle('dark-theme');
   const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
@@ -123,3 +182,24 @@ window.addEventListener('load', function () {
     document.body.classList.add('dark-theme');
   }
 });
+
+// Sayfa yüklendiğinde
+window.addEventListener('load', () => {
+    loadProgress();
+    showMotivationalMessage();
+    
+    // Bildirim izni iste
+    if ('Notification' in window) {
+        Notification.requestPermission();
+    }
+});
+
+// Her saat başı hatırlatma
+setInterval(() => {
+    if (Notification.permission === "granted") {
+        new Notification("Su İçme Zamanı! 💕", {
+            body: "Biraz su içmeye ne dersin?",
+            icon: "water-icon.png"
+        });
+    }
+}, 3600000); // Her saat (3600000 ms)
