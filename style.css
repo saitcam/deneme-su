@@ -444,3 +444,20 @@ reminder-settings input[type="time"]:focus {
   visibility: visible;
   transform: translateX(-50%) translateY(-20px);
 }
+
+/* Reset Button */
+.reset-button {
+    background: #fff;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.reset-button:hover {
+    background: var(--primary-color);
+    color: #fff;
+}

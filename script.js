@@ -109,7 +109,7 @@ function resetTotal() {
     total = 0;
     updateDisplay();
     saveProgress();
-    showToast('Günlük toplam sıfırlandı! 🔄');
+    showToast('İçilen su sıfırlandı! 💧');
 }
 
 // Sayfa yüklendiğinde
