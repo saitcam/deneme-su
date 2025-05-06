@@ -3,11 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:* data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; connect-src 'self' https: wss: localhost:* ws://localhost:*">
     <title>Seray'ın Su Takipçisi 💕</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+
+    <!-- Firebase Yapılandırması -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBD_MDEzRmT3xF4IoJNuZFAriD6LPgRrzY",
+            authDomain: "su-takipcisi.firebaseapp.com",
+            projectId: "su-takipcisi",
+            storageBucket: "su-takipcisi.firebasestorage.app",
+            messagingSenderId: "138555272848",
+            appId: "1:138555272848:web:5268986bdee29ec648b215",
+            measurementId: "G-ZYHPDLESF3",
+            databaseURL: "https://su-takipcisi-default-rtdb.europe-west1.firebasedatabase.app",
+              "rules": {
+                "settings": {
+                  ".read": true,
+                  ".write": true
+                },
+                "users": {
+                  ".read": true,
+                  ".write": true
+              }
+            }
+        }
+
+        // Firebase'i başlat
+        firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics();
+    </script>
 </head>
 <body>
     <header>
@@ -20,25 +54,53 @@
             <p id="motivationMessage">Günaydın Seray! Bugün kendine iyi bak ve su içmeyi unutma 💝</p>
         </div>
 
-        <div class="water-card">
-            <p>Bugün içilen su: <span id="total">0</span> ml</p>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
+        <div class="users-container">
+            <!-- Seray'ın kartı -->
+            <div class="water-card">
+                <h3>Seray'ın Su Tüketimi</h3>
+                <p>Bugün içilen su: <span id="seray-total">0</span> ml</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="seray-progress"></div>
+                </div>
+                <p id="seray-progress-text">0%</p>
+                <div class="quick-add">
+                    <button onclick="addWater(250, 'seray')" class="water-button">
+                        💧 Küçük Bardak (250ml)
+                    </button>
+                    <button onclick="addWater(500, 'seray')" class="water-button">
+                        💧 Büyük Bardak (500ml)
+                    </button>
+                    <button onclick="addWater(650, 'seray')" class="water-button">
+                        💧 Termos (650ml)
+                    </button>
+                </div>
             </div>
-            <p id="progressText">0%</p>
+
+            <!-- Sait'in kartı -->
+            <div class="water-card">
+                <h3>Sait'in Su Tüketimi</h3>
+                <p>Bugün içilen su: <span id="sait-total">0</span> ml</p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="sait-progress"></div>
+                </div>
+                <p id="sait-progress-text">0%</p>
+                <div class="quick-add">
+                    <button onclick="addWater(250, 'sait')" class="water-button">
+                        💧 Küçük Bardak (250ml)
+                    </button>
+                    <button onclick="addWater(500, 'sait')" class="water-button">
+                        💧 Büyük Bardak (500ml)
+                    </button>
+                    <button onclick="addWater(650, 'sait')" class="water-button">
+                        💧 Termos (650ml)
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="quick-add">
-            <button onclick="addWater(250)" class="water-button">
-                💧 Küçük Bardak (250ml)
-            </button>
-            <button onclick="addWater(500)" class="water-button">
-                💧 Büyük Bardak (500ml)
-            </button>
-            <button onclick="addWater(650)" class="water-button">
-                💧 Termos (650ml)
-            </button>
-            <button onclick="resetTotal()" class="reset-button">İçilen Suyu Sıfırla 🔄</button>
+        <div class="control-buttons">
+            <button onclick="resetTotal('seray')" class="reset-button">Seray'ın Suyunu Sıfırla 🔄</button>
+            <button onclick="resetTotal('sait')" class="reset-button">Sait'in Suyunu Sıfırla 🔄</button>
         </div>
 
         <div class="goal-card">
@@ -52,7 +114,6 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
@@ -74,5 +135,6 @@
             }
         }
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
