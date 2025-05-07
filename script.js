@@ -170,16 +170,27 @@ window.addEventListener('load', () => {
     }
     autoDarkModeByTime();
     setInterval(autoDarkModeByTime, 60 * 60 * 1000); // Her saat başı kontrol
+    checkDayReset(); // Sayfa yüklenince kontrol et
 });
 
-// Her gece yarısı toplamı sıfırla
+// Son gösterilen tarihi localStorage'da tut
 function checkDayReset() {
-    const now = new Date();
-    if (now.getHours() === 0 && now.getMinutes() === 0) {
-        resetTotal();
+    const today = new Date().toISOString().slice(0, 10);
+    const lastDate = localStorage.getItem('lastDate');
+    if (lastDate !== today) {
+        localStorage.setItem('lastDate', today);
+        // Ekrandaki toplamları sıfırla
+        document.getElementById('seray-total').textContent = '0';
+        document.getElementById('sait-total').textContent = '0';
+        document.getElementById('seray-progress').style.width = '0%';
+        document.getElementById('seray-progress-text').textContent = '0%';
+        document.getElementById('sait-progress').style.width = '0%';
+        document.getElementById('sait-progress-text').textContent = '0%';
     }
 }
-setInterval(checkDayReset, 60000); // Her dakika kontrol et
+
+// Her dakika kontrol et
+setInterval(checkDayReset, 60000);
 
 function toggleDarkMode() {
     const body = document.documentElement;
