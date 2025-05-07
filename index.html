@@ -112,6 +112,29 @@
             <button onclick="saveDailyGoal()" class="goal-button">Hedefi Kaydet 💝</button>
             <p>Mevcut Hedef: <span id="currentGoal">2000</span> ml</p>
         </div>
+
+        <div>
+            <button onclick="addWater(200)">200ml</button>
+            <button onclick="addWater(300)">300ml</button>
+            <button onclick="addWater(500)">500ml</button>
+            <p>Bugün içilen su: <span id="total">0</span> ml</p>
+            <div id="progressBar" style="width:100%;background:#eee;">
+                <div id="progressText" style="background:#4caf50;width:0%;color:#fff;">0%</div>
+            </div>
+        </div>
+
+        <div class="reminder-buttons">
+            <label for="reminder-interval">Hatırlatıcı Aralığı (dakika):</label>
+            <input type="number" id="reminder-interval" min="10" value="120" style="width:60px;">
+            <button onclick="startCustomWaterReminder()">Hatırlatıcıyı Başlat</button>
+            <button onclick="clearInterval(window.waterReminderInterval)">Hatırlatıcıyı Durdur</button>
+        </div>
+
+        <div class="friend-section">
+            <input type="text" id="friend-username" placeholder="Arkadaş kullanıcı adı">
+            <button onclick="addFriend()">Arkadaş Ekle</button>
+            <div id="friend-list"></div>
+        </div>
     </main>
 
     <script>

@@ -171,6 +171,7 @@ window.addEventListener('load', () => {
     autoDarkModeByTime();
     setInterval(autoDarkModeByTime, 60 * 60 * 1000); // Her saat başı kontrol
     checkDayReset(); // Sayfa yüklenince kontrol et
+    loadFriends(); // Sayfa yüklenince arkadaş listesini göster
 });
 
 // Son gösterilen tarihi localStorage'da tut
@@ -216,3 +217,104 @@ function autoDarkModeByTime() {
         localStorage.setItem('theme', 'light');
     }
 }
+
+// Bildirim izni isteme
+function requestNotificationPermission() {
+    if ('Notification' in window) {
+        if (Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+    }
+}
+document.addEventListener('DOMContentLoaded', requestNotificationPermission);
+
+function showNotification(title, body) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, { body: body });
+    }
+}
+
+// script.js dosyanın uygun bir yerine ekle
+function startWaterReminder(intervalMinutes = 120) {
+    // Önce varsa eski hatırlatıcıyı temizle
+    if (window.waterReminderInterval) {
+        clearInterval(window.waterReminderInterval);
+    }
+    // Yeni hatırlatıcıyı başlat
+    window.waterReminderInterval = setInterval(() => {
+        showNotification('Su İçme Zamanı!', 'Sağlığın için bir bardak su içmeyi unutma 💧');
+    }, intervalMinutes * 60 * 1000);
+}
+
+// Sayfa yüklenince otomatik başlatmak için:
+document.addEventListener('DOMContentLoaded', () => {
+    startWaterReminder(120); // 120 dakika (2 saat) aralıkla hatırlatır
+});
+
+function startCustomWaterReminder() {
+    const intervalInput = document.getElementById('reminder-interval');
+    let interval = parseInt(intervalInput.value, 10);
+    if (isNaN(interval) || interval < 10) interval = 120; // minimum 10 dakika
+    startWaterReminder(interval);
+}
+
+function addFriend() {
+    const currentUser = "seray"; // Giriş yapan kullanıcıya göre dinamik yapabilirsin
+    const friendUsername = document.getElementById('friend-username').value.trim();
+    if (!friendUsername) {
+        showToast("Arkadaş kullanıcı adı giriniz!");
+        return;
+    }
+    if (friendUsername === currentUser) {
+        showToast("Kendinizi arkadaş olarak ekleyemezsiniz!");
+        return;
+    }
+    // Arkadaş olarak ekle
+    database.ref(`users/${currentUser}/friends/${friendUsername}`).set(true)
+        .then(() => {
+            showToast("Arkadaş eklendi!");
+            loadFriends();
+        })
+        .catch(() => showToast("Bir hata oluştu!"));
+}
+
+// Arkadaş listesini yükle ve karşılaştırma yap
+function loadFriends() {
+    const currentUser = "seray"; // Giriş yapan kullanıcıya göre dinamik yapabilirsin
+    const today = new Date().toISOString().slice(0, 10);
+    const friendListDiv = document.getElementById('friend-list');
+    friendListDiv.innerHTML = "<b>Arkadaşlar:</b><br>";
+
+    database.ref(`users/${currentUser}/friends`).once('value', snapshot => {
+        const friends = snapshot.val();
+        if (!friends) {
+            friendListDiv.innerHTML += "Henüz arkadaş yok.";
+            return;
+        }
+        // Önce eski dinleyicileri temizle
+        if (window.friendListeners) {
+            window.friendListeners.forEach(unsub => unsub());
+        }
+        window.friendListeners = [];
+
+        Object.keys(friends).forEach(friend => {
+            const friendRef = database.ref(`users/${friend}/${today}`);
+            // Her arkadaş için dinamik dinleyici ekle
+            const listener = friendRef.on('value', snap => {
+                const total = snap.val() || 0;
+                let friendElem = document.getElementById(`friend-${friend}`);
+                if (!friendElem) {
+                    friendElem = document.createElement('div');
+                    friendElem.id = `friend-${friend}`;
+                    friendListDiv.appendChild(friendElem);
+                }
+                friendElem.textContent = `${friend}: ${total} ml`;
+            });
+            // Dinleyiciyi daha sonra kaldırmak için sakla
+            window.friendListeners.push(() => friendRef.off('value', listener));
+        });
+    });
+}
+
+// Sayfa yüklenince arkadaş listesini göster
+window.addEventListener('load', loadFriends);
